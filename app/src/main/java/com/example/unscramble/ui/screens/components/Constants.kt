@@ -1,4 +1,4 @@
-package com.example.unscramble.ui.theme.screens.components
+package com.example.unscramble.ui.screens.components
 
 import com.example.unscramble.ui.theme.Blackish
 import com.example.unscramble.ui.theme.Cream

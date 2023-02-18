@@ -1,4 +1,4 @@
-package com.example.unscramble.ui.theme.screens
+package com.example.unscramble.ui.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -8,15 +8,23 @@ import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.unscramble.R
-import com.example.unscramble.ui.theme.screens.components.GameLayout
-import com.example.unscramble.ui.theme.screens.components.GameStatus
+import com.example.unscramble.ui.GameViewModel
+import com.example.unscramble.ui.screens.components.GameLayout
+import com.example.unscramble.ui.screens.components.GameStatus
 
 @Composable
-fun GameScreen(modifier: Modifier = Modifier) {
+fun GameScreen(
+    modifier: Modifier = Modifier,
+    viewModel: GameViewModel) {
+
+    val state by viewModel.uiState.collectAsState()
+
     Column(
         modifier = modifier
             //.fillMaxSize()
@@ -25,8 +33,8 @@ fun GameScreen(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.spacedBy(8.dp)
 
     ) {
-        GameStatus()
-        GameLayout()
+        GameStatus(count = state.wordCount, currentScore =  )
+        GameLayout(currentWord = state.currentScrambleWord , userAnswer = , onAnswerChange = , correctAnswer = )
 
         Row(
             modifier = modifier.fillMaxWidth(),

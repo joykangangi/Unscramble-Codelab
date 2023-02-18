@@ -1,4 +1,4 @@
-package com.example.unscramble.ui.theme.screens.components
+package com.example.unscramble.ui.screens.components
 
 import android.app.Activity
 import androidx.compose.foundation.Image
@@ -9,9 +9,7 @@ import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.example.unscramble.R

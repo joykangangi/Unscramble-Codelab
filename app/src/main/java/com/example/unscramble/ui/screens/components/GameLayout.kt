@@ -1,4 +1,4 @@
-package com.example.unscramble.ui.theme.screens.components
+package com.example.unscramble.ui.screens.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -19,13 +19,16 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.unscramble.R
-import com.example.unscramble.data.Words
-import com.example.unscramble.ui.theme.screens.components.Constants.GradientColours
+import com.example.unscramble.ui.screens.components.Constants.GradientColours
 
 @OptIn(ExperimentalTextApi::class)
 @Composable
-fun GameLayout() {
-   //Todo VM var etText
+fun GameLayout(
+    currentWord: String,
+    userAnswer: String,
+    onAnswerChange: (String) -> Unit,
+    correctAnswer: Boolean
+) {
 
     BoxWithConstraints(
         modifier = Modifier
@@ -37,30 +40,23 @@ fun GameLayout() {
     ) {
         Column(verticalArrangement = Arrangement.spacedBy(24.dp)) {
             Text(
-                text = getNextWord(), style = TextStyle(
+                text = currentWord, style = TextStyle(
                     brush = Brush.linearGradient(colors = GradientColours)
                 ), fontSize = 45.sp
             )
-            //Spacer(modifier = Modifier.height(4.dp))
+
             Text(text = stringResource(id = R.string.instructions), fontSize = 17.sp)
-           // Spacer(modifier = Modifier.height(8.dp))
+
             OutlinedTextField(
-                value = "",
-                onValueChange = {},
+                value = userAnswer,
+                onValueChange = onAnswerChange,
                 placeholder = { Text(text = stringResource(id = R.string.enter_et)) },
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                 keyboardActions = KeyboardActions(onDone = {
                 }),
-                isError = false //Todo VM
+                isError = correctAnswer
             )
         }
     }
-}
-
-//Todo VM?
-fun getNextWord(): String {
-    var wordIndex = 0
-    val words = Words.allWords
-    return words.elementAt(++wordIndex).toCharArray().shuffle().toString()
 }
