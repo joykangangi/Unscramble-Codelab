@@ -13,20 +13,20 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.ExperimentalTextApi
-import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.*
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.unscramble.R
-import com.example.unscramble.ui.screens.components.Constants.GradientColours
+
 
 @OptIn(ExperimentalTextApi::class)
 @Composable
 fun GameLayout(
     currentWord: String,
     userAnswer: String,
-    onAnswerChange: (String) -> Unit
+    onAnswerChange: (String) -> Unit,
+    onKeyBoardDone:() -> Unit
 ) {
 
     BoxWithConstraints(
@@ -39,11 +39,11 @@ fun GameLayout(
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(
-                text = currentWord, style = TextStyle(
-                    brush = Brush.linearGradient(colors = GradientColours)
-                ), fontSize = 45.sp
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(text = currentWord, fontSize = 45.sp, style = TextStyle(
+                brush = Brush.linearGradient(colors = Constants.GradientColours)
+            )
             )
 
             Text(text = stringResource(id = R.string.instructions), fontSize = 17.sp)
@@ -55,9 +55,22 @@ fun GameLayout(
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                 keyboardActions = KeyboardActions(onDone = {
+                    onKeyBoardDone()
                 }),
                 modifier = Modifier.padding(bottom = 15.dp)
             )
         }
     }
 }
+/*
+@Composable
+fun ScrambledWord(word: String, color: Color) {
+    val letterColorMap = mutableMapOf<Char, Color>()
+
+    val annotatedString = AnnotatedString.Builder().apply {
+        for ((index, char) in word.withIndex()) {
+            val color = if (index)
+        }
+    }
+
+}*/

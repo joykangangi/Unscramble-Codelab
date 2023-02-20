@@ -5,13 +5,18 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.ExperimentalTextApi
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.unscramble.R
+import com.example.unscramble.ui.screens.components.Constants.GradientColours
+
 
 @Composable
-fun GameStatus(count: Int, currentScore: Int, totalWords: Int) {
+fun GameStatus(count: Int, currentScore: Int) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -19,8 +24,8 @@ fun GameStatus(count: Int, currentScore: Int, totalWords: Int) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text( text = stringResource(id = R.string.out_of,count,totalWords ), fontSize = 18.sp )
-        Text( text = stringResource(id = R.string.score_count, currentScore), fontSize = 18.sp )
+        Text( text = stringResource(id = R.string.out_of,count), fontSize = 18.sp )
+        Text( text = stringResource(id = R.string.score_count, currentScore), fontSize = 18.sp)
 
     }
 }

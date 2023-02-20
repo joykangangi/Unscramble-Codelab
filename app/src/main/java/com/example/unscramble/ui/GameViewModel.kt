@@ -2,6 +2,9 @@ package com.example.unscramble.ui
 
 import androidx.lifecycle.ViewModel
 import com.example.unscramble.data.Words
+import com.example.unscramble.ui.screens.components.Constants.MAX_NO_OF_WORDS
+import com.example.unscramble.ui.screens.components.Constants.SCORE_INCREASE
+import com.example.unscramble.ui.screens.components.Constants.SKIP_DECREASE
 import com.example.unscramble.ui.screens.shuffleString
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,11 +16,8 @@ class GameViewModel : ViewModel() {
     val uiState: StateFlow<GameUiState> = _uiState.asStateFlow()
 
     private lateinit var currentWord: String
-    private lateinit var correctAns: String
+    lateinit var correctAns: String
 
-    private var score = _uiState.value.currentScore
-    val wordSize = Words.allWords.size
-    val percScore = (score / wordSize) * 100
     private val usedWords = mutableSetOf<String>()
 
 
@@ -26,6 +26,8 @@ class GameViewModel : ViewModel() {
         hasError()
         wordCount()
     }
+
+
 
     private fun getWord(): String {
         val words = Words.allWords
@@ -42,31 +44,50 @@ class GameViewModel : ViewModel() {
         getWord()
     }
 
+
     fun resetGame() {
         usedWords.removeAll(usedWords)
-        resetWord()
+        _uiState.value = _uiState.value.copy(
+            currentScrambleWord = "",
+            wordCount = 0,
+            currentScore = 0,
+            answer = "",
+            isEnabled = false,
+            isGameOver = false
+        )
+        getWord()
+        hasError()
+        wordCount()
     }
 
+    private fun isGameOver() {
+        if (usedWords.size == MAX_NO_OF_WORDS) {
+            _uiState.value = _uiState.value.copy(isGameOver = true)
+        } else {
+            resetWord()
+            hasError()
+            wordCount()
+        }
+    }
 
     //onNext Click
     fun checkAns() {
         if (_uiState.value.answer == correctAns) {
-            _uiState.value = _uiState.value.copy(currentScore = _uiState.value.currentScore + 10)
+            _uiState.value =
+                _uiState.value.copy(currentScore = _uiState.value.currentScore.plus(SCORE_INCREASE))
         } else {
-            _uiState.value = _uiState.value.copy(currentScore = _uiState.value.currentScore - 10)
+            _uiState.value = _uiState.value.copy(
+                currentScore = _uiState.value.currentScore.minus(SCORE_INCREASE)
+            )
         }
-        resetWord()
-        hasError()
-        wordCount()
+        isGameOver()
     }
 
     //onSkip Click
     fun onSkipClick() {
-        //score = score -15
-        _uiState.value = _uiState.value.copy(currentScore = _uiState.value.currentScore - 15)
-        resetWord()
-        hasError()
-        wordCount()
+        _uiState.value =
+            _uiState.value.copy(currentScore = _uiState.value.currentScore.minus(SKIP_DECREASE))
+        isGameOver()
     }
 
     private fun wordCount() {
@@ -86,6 +107,22 @@ class GameViewModel : ViewModel() {
         }
         //Log.i("VModel","Answer Length ${answerSize}, Word Length $wordSize, isEnabled: ${_uiState.value.isEnabled} " )
     }
+
+    /* private fun colorText () {
+          val quesWord = _uiState.value.currentScrambleWord
+          val answerWord = _uiState.value.answer
+          for (letter in answerWord) {
+              if (quesWord.contains(letter)) {
+                  _uiState.value = _uiState.value.copy(letterColor = Purple700)
+              }
+              else {
+                  _uiState.value = _uiState.value.copy(letterColor = Color.DarkGray)
+              }
+          }
+      }*/
+
+
+
 
     fun updateAns(input: String) {
         _uiState.value = _uiState.value.copy(answer = input)

@@ -5,5 +5,7 @@ data class GameUiState(
     val wordCount: Int = 0,
     val currentScore: Int = 0,
     val answer: String = "",
-    val isEnabled: Boolean = false
+    val isEnabled: Boolean = false,
+    val isGameOver: Boolean = false
+    //val letterColor: Color = Color.DarkGray
 )
