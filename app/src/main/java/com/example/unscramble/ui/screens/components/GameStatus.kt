@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.sp
 import com.example.unscramble.R
 
 @Composable
-fun GameStatus(count: Int, currentScore: Int) {
+fun GameStatus(count: Int, currentScore: Int, totalWords: Int) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -19,7 +19,7 @@ fun GameStatus(count: Int, currentScore: Int) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text( text = stringResource(id = R.string.out_of,count), fontSize = 18.sp )
+        Text( text = stringResource(id = R.string.out_of,count,totalWords ), fontSize = 18.sp )
         Text( text = stringResource(id = R.string.score_count, currentScore), fontSize = 18.sp )
 
     }

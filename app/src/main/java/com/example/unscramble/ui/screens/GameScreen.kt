@@ -6,7 +6,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -21,7 +20,8 @@ import com.example.unscramble.ui.screens.components.GameStatus
 @Composable
 fun GameScreen(
     modifier: Modifier = Modifier,
-    viewModel: GameViewModel) {
+    viewModel: GameViewModel
+) {
 
     val state by viewModel.uiState.collectAsState()
 
@@ -33,20 +33,34 @@ fun GameScreen(
         verticalArrangement = Arrangement.spacedBy(8.dp)
 
     ) {
-        GameStatus(count = state.wordCount, currentScore =  )
-        GameLayout(currentWord = state.currentScrambleWord , userAnswer = , onAnswerChange = , correctAnswer = )
+        GameStatus(count = state.wordCount, currentScore = state.currentScore, totalWords = viewModel.wordSize)
+        GameLayout(
+            currentWord = state.currentScrambleWord,
+            userAnswer = state.answer,
+            onAnswerChange = {
+                viewModel.updateAns(it)
+            }
+        )
 
         Row(
             modifier = modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween) {
-            OutlinedButton(onClick = {
-                //Todo VM
-            }) {
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            OutlinedButton(
+                onClick = {
+                    viewModel.onSkipClick()
+                },
+                modifier = modifier.weight(1f)
+            ) {
                 Text(text = stringResource(id = R.string.skipBtn))
             }
-            Button(onClick = {
-                //Todo VM
-            }) {
+            Button(
+                onClick = {
+                    viewModel.checkAns()
+                },
+                modifier = modifier.weight(1f),
+                enabled = state.isEnabled
+            ) {
                 Text(text = stringResource(id = R.string.nextBtn))
             }
         }

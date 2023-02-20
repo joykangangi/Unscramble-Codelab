@@ -9,16 +9,16 @@ import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.example.unscramble.R
 
 @Composable
-fun FinishDialog(onPlayAgain:()-> Unit) {
+fun FinishDialog(onPlayAgain:()-> Unit, percScore: Int, dialogText: String) {
     val openDialog = remember { mutableStateOf(false) }
-    val percScore = 78
-    //Todo VM - getTitle()
 
     val activity = (LocalContext.current as Activity)
 
@@ -29,7 +29,7 @@ fun FinishDialog(onPlayAgain:()-> Unit) {
             },
             title = {
                 Row(horizontalArrangement = Arrangement.SpaceAround) {
-                    Text(text = "")
+                    Text(text = dialogText)
                     Image(imageVector = Icons.Default.Check, contentDescription = null)
                 }
             },

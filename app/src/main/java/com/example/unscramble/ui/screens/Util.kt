@@ -1,4 +1,4 @@
-package com.example.unscramble.ui.screens.components
+package com.example.unscramble.ui.screens
 
 //extension Function for neat work
 
@@ -9,5 +9,5 @@ fun String.shuffleString(): String{
         aCharArray.shuffle()
     }
 
-    return aCharArray.toString()
+    return aCharArray.concatToString()
 }

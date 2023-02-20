@@ -26,8 +26,7 @@ import com.example.unscramble.ui.screens.components.Constants.GradientColours
 fun GameLayout(
     currentWord: String,
     userAnswer: String,
-    onAnswerChange: (String) -> Unit,
-    correctAnswer: Boolean
+    onAnswerChange: (String) -> Unit
 ) {
 
     BoxWithConstraints(
@@ -38,7 +37,9 @@ fun GameLayout(
             .clip(RoundedCornerShape(10.dp)),
         contentAlignment = Alignment.Center
     ) {
-        Column(verticalArrangement = Arrangement.spacedBy(24.dp)) {
+        Column(
+            verticalArrangement = Arrangement.spacedBy(24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
                 text = currentWord, style = TextStyle(
                     brush = Brush.linearGradient(colors = GradientColours)
@@ -55,7 +56,7 @@ fun GameLayout(
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                 keyboardActions = KeyboardActions(onDone = {
                 }),
-                isError = correctAnswer
+                modifier = Modifier.padding(bottom = 15.dp)
             )
         }
     }
